@@ -1,24 +1,58 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## usersテーブル
 
-Things you may want to cover:
+| Colum                | Type   | Options     |
+| -------------------- | ------ | ----------- |
+| name                 | string | null: false |
+| email                | string | null: false |
+| encrypted_password   | string | null: false |
 
-* Ruby version
+### Association
 
-* System dependencies
+- has_many :items
+- has_many :purchase_record
+- has_one :shipping_info
 
-* Configuration
 
-* Database creation
+## itemsテーブル
 
-* Database initialization
+| Colum      | Type   | Options     |
+| ---------- | ------ | ----------- |
+| item       | string | null: false |
+| image      | string | null: false |
+| category   | string | null: false |
+| price      | string | null: false |
 
-* How to run the test suite
+### Association
 
-* Services (job queues, cache servers, search engines, etc.)
+- belongs_to :users
+- has_one :purchase_records
+- has_one :shipping_info
 
-* Deployment instructions
+## purchase_records
 
-* ...
+| Colum      | Type       | Options           |
+| ---------- | ---------- | ----------------- |
+| user_id    | references | foreign_key: true |
+| item_id    | references | foreign_key: true |
+
+### Association
+
+- belongs_to :users
+- belongs_to :items
+- has_one :shipping_info
+
+## shipping_info
+
+| Colum        | Type   | Options     |
+| ------------ | ------ | ----------- |
+| item_name    | string | null: false |
+| image_name   | string | null: false |
+| delivery_fee | string | null: false |
+
+### Association
+
+- belongs_to :users
+- belongs_to :items
+- belongs_to :purchase_records
