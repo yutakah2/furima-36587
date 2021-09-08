@@ -1,24 +1,68 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## usersテーブル
 
-Things you may want to cover:
+| Colum                | Type   | Options                   |
+| -------------------- | ------ | ------------------------- |
+| name                 | string | null: false               |
+| email                | string | unique: true, null: false |
+| encrypted_password   | string | null: false               |
+| first_name           | string | null: false               |
+| last_name            | string | null: false               |
+| first_name_kana      | string | null: false               |
+| last_name_kana       | string | null: false               |
+| birthday             | date   | null: false               |
 
-* Ruby version
+### Association
 
-* System dependencies
+- has_many :items
+- has_many :records
 
-* Configuration
 
-* Database creation
+## itemsテーブル
 
-* Database initialization
+| Colum         | Type       | Options           |
+| ------------- | ---------- | ----------------- |
+| item          | string     | null: false       |
+| category_id   | integer    | null: false       |
+| price         | integer    | null: false       |
+| condition_id  | integer    | null: false       |
+| charges_id    | integer    | null: false       |
+| area_id       | integer    | null: false       |
+| day_id        | integer    | null: false       |
+| user          | references | foreign_key: true |
+| explanation   | text       | null: false       |
 
-* How to run the test suite
+### Association
 
-* Services (job queues, cache servers, search engines, etc.)
+- belongs_to :user
+- has_one :record
 
-* Deployment instructions
+## records
 
-* ...
+| Colum   | Type       | Options           |
+| ------- | ---------- | ----------------- |
+| user    | references | foreign_key: true |
+| item    | references | foreign_key: true |
+
+### Association
+
+- belongs_to :user
+- belongs_to :item
+- has_one :information
+
+## information
+
+| Colum           | Type       | Options           |
+| --------------- | ---------- | ----------------- |
+| code            | integer    | null: false       |
+| prefectures     | string     | null: false       |
+| municipalities  | string     | null: false       |
+| address         | string     | null: false       |
+| building        | string     |                   |
+| telephone       | string     | null: false       |
+| record          | references | foreign_key: true |
+
+### Association
+
+- belongs_to :record
