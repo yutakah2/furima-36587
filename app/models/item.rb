@@ -5,7 +5,9 @@ class Item < ApplicationRecord
   belongs_to :charges
   belongs_to :condition
   belongs_to :category
+  belongs_to :user
   has_one_attached :image
+
 
   with_options presence: true do
     validates :item
