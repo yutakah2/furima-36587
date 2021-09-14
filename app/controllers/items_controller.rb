@@ -5,9 +5,6 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.order('created_at DESC')
-    # if current_user == @item.user
-    # redirect_to root_path
-    # end
   end
 
   def new
