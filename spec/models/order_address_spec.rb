@@ -25,12 +25,17 @@ RSpec.describe OrderAddress, type: :model do
         expect(@order_address.errors.full_messages).to include "Code can't be blank"
       end
       it 'codeが半角のハイフンを含んだ正しい形式でないと保存できない' do
-        @order_address.code = 1234567
+        @order_address.code = '1234567'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include "Code is invalid. Include hyphen(-)"
       end
       it 'area_idが空だと登録できない' do
         @order_address.area_id = ''
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include "Area can't be blank"
+      end
+      it '1を選択している場合登録できない' do
+        @order_address.area_id = 1
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include "Area can't be blank"
       end
@@ -49,8 +54,18 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include "Telephone can't be blank"
       end
-      it '電話番号は、10桁以上11桁以内の半角数値でないと保存できない' do
-        @order_address.telephone = 190123456789
+      it '電話番号は、9桁以下では保存できない' do
+        @order_address.telephone = '19012345'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include "Telephone is invalid"
+      end
+      it '電話番号が12桁以上では保存できない' do
+        @order_address.telephone = '190123456789'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include "Telephone is invalid"
+      end
+      it '電話番号に半角数字以外が含まれている場合は保存できない' do
+        @order_address.telephone = 'aa漢字カタカナひらがなｶﾀｶﾅ'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include "Telephone is invalid"
       end
