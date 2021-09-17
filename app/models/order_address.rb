@@ -23,7 +23,8 @@ class OrderAddress
       address: address, 
       telephone: telephone,
       area_id: area_id, 
-      order: order)
+      order: order,
+      building: building)
    end
 end
 
